@@ -5,8 +5,38 @@
         packageStartupMessage("Welcome to bi.r")
 }
 
-load(domoCustomer)
-load(domoAccessToken)
+load('domoCustomer')
+load('domoAccessToken')
 
-init(Sys.getenv('DOMO_BASE_URL'), Sys.getenv('DEVELOPER_TOKEN'))
-ds <- fetch('8df653c5-d368-4a5e-ba83-0a912fd405db')
+#' create domo environment and store login info
+#'
+#' @param customer The customer ID or base URL.  e.g.  acme.domo.com  or  acme
+#' @param token The DEV token required for API access.
+#' @export
+#' @examples
+#' init(Sys.getenv('DOMO_BASE_URL'), Sys.getenv('DEVELOPER_TOKEN'))
+init <- function(customer,
+                 token,
+                 config = NULL,
+                 verbose = FALSE) {
+
+  .domo_env$customer <- customer
+  .domo_env$customer.url <-
+    paste0("https://", customer, '.domo.com')
+  .domo_env$auth.token <- c('X-DOMO-Developer-Token' = token)
+  .domo_env$user.agent <- c("User-Agent" = "DomoR-test/1.0")
+  if (is.null(config)) {
+    if (verbose == TRUE) {
+      assign("config", c(verbose = TRUE), .domo_env)
+    }
+    else {
+      assign("config", c(), .domo_env)
+    }
+  }
+  else {
+    assign("config", config, .domo_env)
+  }
+}
+
+init(domoCustomer, domoAccessToken)
+customer <- domoCustomer

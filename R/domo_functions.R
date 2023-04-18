@@ -1,33 +1,3 @@
-#' create domo environment and store login info
-#'
-#' @param customer The customer ID or base URL.  e.g.  acme.domo.com  or  acme
-#' @param token The DEV token required for API access.
-#' @export
-#' @examples
-#' init(Sys.getenv('DOMO_BASE_URL'), Sys.getenv('DEVELOPER_TOKEN'))
-init <- function(customer,
-                 token,
-                 config = NULL,
-                 verbose = FALSE) {
-
-        .domo_env$customer <- customer
-        .domo_env$customer.url <-
-                paste0("https://", customer, '.domo.com')
-        .domo_env$auth.token <- c('X-DOMO-Developer-Token' = token)
-        .domo_env$user.agent <- c("User-Agent" = "DomoR-test/1.0")
-        if (is.null(config)) {
-                if (verbose == TRUE) {
-                        assign("config", c(verbose = TRUE), .domo_env)
-                }
-                else {
-                        assign("config", c(), .domo_env)
-                }
-        }
-        else {
-                assign("config", config, .domo_env)
-        }
-}
-
 #' Fetch a data source.
 #'
 #' Retrieves a data source by ID (GUID) or by
