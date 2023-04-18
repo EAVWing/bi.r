@@ -1,12 +1,15 @@
+# Stuff to setup Domo access
+#####
+
 # add empty .domo_env as parent
 .domo_env <- new.env()
 
 .onLoad <- function(libname, pkgname) {
-        packageStartupMessage("Welcome to bi.r")
+        packageStartupMessage("Welcome to bi.r your home for BI stuff")
 }
 
-load('domoCustomer')
-load('domoAccessToken')
+customer <- load('domoCustomer')
+token <- load('domoAccessToken')
 
 #' create domo environment and store login info
 #'
@@ -38,5 +41,6 @@ init <- function(customer,
   }
 }
 
-init(domoCustomer, domoAccessToken)
-customer <- domoCustomer
+init(customer, token)
+#####
+
